@@ -6,6 +6,7 @@ import exerciseRoutes from './src/routes/exerciseRoutes.js';
 import progressRoutes from './src/routes/progressRoutes.js';
 
 import 'dotenv/config';
+
 const app = new Hono();
 
 app.route('/auth', authRoutes);
@@ -23,4 +24,4 @@ serve({
   port
 });
 
-console.log(` Servidor rodando na porta ${port}`);
+console.log(`Servidor rodando na porta ${port}`);
