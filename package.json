@@ -13,9 +13,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+<<<<<<< HEAD
     "@supabase/supabase-js": "^2.48.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
+=======
+    "@hono/node-server": "^1.13.8",
+    "@supabase/supabase-js": "^2.48.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "fitness-app-backend": "file:",
+>>>>>>> ded1fb8 (iniciar servidor com @hono/node-server e suporte a dotenv)
     "hono": "^4.7.0",
     "jsonwebtoken": "^9.0.2"
   },
