@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { authenticate } from '../middleware/authenticate.js';
 import { getTasks, getTaskById, addTask, updateTask, deleteTask } from '../controllers/taskController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
 
 const taskRoutes = new Hono();
 

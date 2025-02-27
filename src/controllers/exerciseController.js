@@ -1,21 +1,35 @@
 import supabase from '../config/supabase.js';
 
-export const logExercise = async (user_id, routine_id, exercise, completed) => {
-  const { data, error } = await supabase
-    .from('exercises')
-    .insert([{ user_id, routine_id, exercise, completed }])
-    .single();
+export const logExercise = async (c) => {
+  try {
+    const { routine_id, exercise, completed } = await c.req.json();
+    const user_id = c.get('user_id'); // Pegando automaticamente do contexto
 
-  if (error) throw new Error(error.message);
-  return data;
+    const { data, error } = await supabase
+      .from('exercises')
+      .insert([{ routine_id, exercise, completed, user_id }])
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+    return c.json(data, 201);
+  } catch (err) {
+    return c.json({ error: err.message }, 500);
+  }
 };
 
-export const getExercises = async (user_id) => {
-  const { data, error } = await supabase
-    .from('exercises')
-    .select('*')
-    .eq('user_id', user_id);
+export const getExercises = async (c) => {
+  try {
+    const user_id = c.get('user_id');
 
-  if (error) throw new Error(error.message);
-  return data;
+    const { data, error } = await supabase
+      .from('exercises')
+      .select('*')
+      .eq('user_id', user_id);
+
+    if (error) throw new Error(error.message);
+    return c.json(data);
+  } catch (err) {
+    return c.json({ error: err.message }, 500);
+  }
 };

@@ -11,7 +11,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Este é o backend para o aplicativo Fitness App, desenvolvido para ajudar os usuários a gerenciar suas rotinas de exercícios, dietas e acompanhar seu progresso físico ao longo do tempo.",
   "dependencies": {
     "@hono/node-server": "^1.13.8",
     "@supabase/supabase-js": "^2.48.1",
@@ -19,7 +19,9 @@
     "dotenv": "^16.4.7",
     "fitness-app-backend": "file:",
     "hono": "^4.7.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

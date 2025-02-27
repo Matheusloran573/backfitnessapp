@@ -6,17 +6,7 @@ const progressRoutes = new Hono();
 
 progressRoutes.use('*', authenticate);
 
-progressRoutes.post('/', async (c) => {
-  const user_id = c.get('user').id;
-  const { weight, measurements } = await c.req.json();
-  const progress = await logProgress(user_id, weight, measurements);
-  return c.json({ progress });
-});
-
-progressRoutes.get('/', async (c) => {
-  const user_id = c.get('user').id;
-  const progress = await getProgress(user_id);
-  return c.json({ progress });
-});
+progressRoutes.post('/', logProgress);
+progressRoutes.get('/', getProgress);
 
 export default progressRoutes;

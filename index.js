@@ -6,6 +6,7 @@ import exerciseRoutes from './src/routes/exerciseRoutes.js';
 import progressRoutes from './src/routes/progressRoutes.js';
 import taskRoutes from './src/routes/taskRoutes.js';
 
+import { checkTasksDeadlines } from './src/services/taskNotifier.js';
 import 'dotenv/config';
 
 const app = new Hono();
@@ -14,16 +15,19 @@ app.route('/auth', authRoutes);
 app.route('/routines', routineRoutes);
 app.route('/exercises', exerciseRoutes);
 app.route('/progress', progressRoutes);
-app.route('/tasks', taskRoutes)
+app.route('/tasks', taskRoutes);
 
 app.get('/', (c) => {
   return c.text('Bem-vindo ao Fitness App Backend!');
 });
 
+console.log('começando verificação automática de prazos');
+checkTasksDeadlines(); 
+
 const port = 3000;
 serve({
   fetch: app.fetch,
-  port
+  port,
 });
 
 console.log(`Servidor rodando na porta ${port}`);
