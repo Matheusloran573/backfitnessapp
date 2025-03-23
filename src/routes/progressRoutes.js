@@ -1,12 +1,12 @@
 import { Hono } from 'hono';
-import { logProgress, getProgress } from '../controllers/progressController.js';
+import { postProgress, getProgress } from '../controllers/progressController.js';
 import { authenticate } from '../middleware/authMiddleware.js';
 
 const progressRoutes = new Hono();
 
 progressRoutes.use('*', authenticate);
 
-progressRoutes.post('/', logProgress);
+progressRoutes.post('/', postProgress);
 progressRoutes.get('/', getProgress);
 
 export default progressRoutes;

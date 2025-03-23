@@ -1,9 +1,9 @@
 import supabase from '../config/supabase.js';
 
-export const logExercise = async (c) => {
+export const postExercise = async (c) => {
   try {
     const { routine_id, exercise, completed } = await c.req.json();
-    const user_id = c.get('user_id'); // Pegando automaticamente do contexto
+    const user_id = c.get('user_id');
 
     const { data, error } = await supabase
       .from('exercises')

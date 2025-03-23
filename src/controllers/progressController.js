@@ -1,6 +1,6 @@
 import supabase from '../config/supabase.js';
 
-export const logProgress = async (c) => {
+export const postProgress = async (c) => {
   try {
     const { weight, measurements } = await c.req.json();
     const user_id = c.get('user_id'); 

@@ -1,15 +1,22 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import authRoutes from './src/routes/authRoutes.js';
 import routineRoutes from './src/routes/routineRoutes.js';
 import exerciseRoutes from './src/routes/exerciseRoutes.js';
 import progressRoutes from './src/routes/progressRoutes.js';
 import taskRoutes from './src/routes/taskRoutes.js';
-
 import { checkTasksDeadlines } from './src/services/taskNotifier.js';
+
 import 'dotenv/config';
 
 const app = new Hono();
+
+app.use(cors({
+  origin: ['http://localhost:4200', 'http://localhost:8080'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 app.route('/auth', authRoutes);
 app.route('/routines', routineRoutes);
@@ -22,7 +29,7 @@ app.get('/', (c) => {
 });
 
 console.log('começando verificação automática de prazos');
-checkTasksDeadlines(); 
+checkTasksDeadlines();
 
 const port = 3000;
 serve({

@@ -3,13 +3,13 @@ import supabase from '../config/supabase.js';
 export const createRoutine = async (c) => {
   try {
     const { name, exercises } = await c.req.json(); 
-    const user_id = c.get('user_id'); // Pegando automaticamente o user_id
+    const user_id = c.get('user_id');
 
     console.log(`Criando rotina para user_id: ${user_id}`);
 
     const { data, error } = await supabase
       .from('routines')
-      .insert([{ name, exercises, user_id }]) // user_id vai direto pro banco
+      .insert([{ name, exercises, user_id }]) 
       .select()
       .single();
 

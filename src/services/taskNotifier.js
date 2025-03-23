@@ -12,7 +12,7 @@ export const checkTasksDeadlines = async () => {
       .eq('status', 'Pendente');
 
     if (!tasks || tasks.length === 0) {
-      console.log('Nenhuma tarefa pendente encontrada.');
+      console.log('Nenhuma tarefa pendente encontrada');
       return;
     }
 
@@ -28,7 +28,7 @@ export const checkTasksDeadlines = async () => {
         .single();
 
       if (!user) {
-        console.warn(`Usuário não encontrado para user_id: ${user_id}`);
+        console.warn(`Usuário não encontrado para user_id ${user_id}`);
         continue;
       }
 
@@ -37,8 +37,8 @@ export const checkTasksDeadlines = async () => {
       if (end_date === today) {
         await sendEmail(
           userEmail,
-          'Aviso: Último dia para concluir sua tarefa!',
-          `Olá, hoje é o último dia para concluir a tarefa: ${title}. Não se esqueça de finalizá-la!`
+          'Aviso Último dia para concluir sua tarefa',
+          `Olá hoje é o último dia para concluir a tarefa ${title} Não se esqueça de finalizá-la`
         );
         console.log(`E-mail enviado para ${userEmail} - Último dia da tarefa: ${title}`);
       }
@@ -46,18 +46,18 @@ export const checkTasksDeadlines = async () => {
       if (new Date(end_date) < new Date(today)) {
         await sendEmail(
           userEmail,
-          'Aviso: Tarefa Pendente!',
-          `Você tem tarefas pendentes que não foram concluídas. Por favor, verifique a tarefa: ${title}.`
+          'Aviso Tarefa Pendente',
+          `Você tem tarefas pendentes que não foram concluídas. Por favor verifique a tarefa ${title}.`
         );
-        console.log(`E-mail enviado para ${userEmail} - Tarefa pendente: ${title}`);
+        console.log(`E-mail enviado para ${userEmail} - Tarefa pendente ${title}`);
       }
     }
   } catch (error) {
-    console.error('Erro na verificação de tarefas:', error);
+    console.error('Erro na verificação de tarefas', error);
   }
 };
 
-cron.schedule('*/1 * * * *', () => {
-  console.log('Verificando prazos de tarefas');
-  checkTasksDeadlines();
-});
+// cron.schedule('*/1 * * * *', () => {
+//   console.log('Verificando prazos de tarefas');
+//   checkTasksDeadlines();
+// });

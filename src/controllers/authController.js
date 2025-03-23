@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import supabase from '../config/supabase.js';
 
 export const register = async (email, password) => {
-
   const { data: existingUser } = await supabase
     .from('users')
     .select('email')
