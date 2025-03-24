@@ -50,7 +50,6 @@ export const createRoutine = async (c) => {
   }
 };
 
-
 export const getRoutines = async (c) => {
   try {
     const user_id = c.get('user_id'); 
@@ -109,4 +108,3 @@ export const deleteRoutine = async (c) => {
     return c.json({ error: err.message }, 500);
   }
 };
-

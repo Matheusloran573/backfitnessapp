@@ -9,7 +9,7 @@ export const checkTasksDeadlines = async () => {
     const { data: tasks, error: taskError } = await supabase
       .from('tasks')
       .select('id, title, end_date, user_id')
-      .eq('status', 'Pendente');
+      .eq('status', 'pendente');
 
     if (!tasks || tasks.length === 0) {
       console.log('Nenhuma tarefa pendente encontrada');

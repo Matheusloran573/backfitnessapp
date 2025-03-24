@@ -2,24 +2,24 @@ import supabase from '../config/supabase.js';
 
 export const postProgress = async (c) => {
   try {
-    const { weight, measurements } = await c.req.json();
-    const user_id = c.get('user_id'); 
+    const { weight, measurements, date } = await c.req.json();
+    const user_id = c.get('user_id');
 
     const { data, error } = await supabase
       .from('progress')
-      .insert([{ weight, measurements, user_id }]) 
+      .insert([{
+        weight,
+        measurements,
+        user_id,
+        date: date || new Date().toISOString().split('T')[0],
+      }])
       .select()
       .single();
 
-    if (error) {
-      console.error('Erro ao registrar progresso:', error.message);
-      throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
 
-    console.log('Progresso registrado com sucesso:', data);
     return c.json(data, 201);
   } catch (err) {
-    console.error('Erro na requisição logProgress:', err.message);
     return c.json({ error: err.message }, 500);
   }
 };
@@ -31,17 +31,32 @@ export const getProgress = async (c) => {
     const { data, error } = await supabase
       .from('progress')
       .select('*')
-      .eq('user_id', user_id);
+      .eq('user_id', user_id)
+      .order('date', { ascending: false });
 
-    if (error) {
-      console.error('Erro ao obter progresso:', error.message);
-      throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
 
-    console.log('Progresso encontrado:', data);
     return c.json(data);
   } catch (err) {
-    console.error('Erro na requisição getProgress:', err.message);
     return c.json({ error: err.message }, 500);
   }
 };
+
+export const deleteProgress = async (c) => {
+  const user_id = c.get('user_id');
+  const id = Number(c.req.param('id'));
+  
+  const { error } = await supabase
+    .from('progress')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user_id);
+
+  if (error) {
+    console.error('Erro ao excluir progresso:', error.message);
+    return c.json({ error: error.message }, 500);
+  }
+
+  return c.json({ message: 'Progresso deletado com sucesso' });
+};
+

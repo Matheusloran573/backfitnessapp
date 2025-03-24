@@ -17,10 +17,6 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
-app.use('*', async (c, next) => {
-  console.log(`[${c.req.method}] ${c.req.path}`);
-  await next();
-});
 
 app.route('/auth', authRoutes);
 app.route('/routines', routineRoutes);
@@ -33,7 +29,7 @@ app.get('/', (c) => {
 });
 
 console.log('começando verificação automática de prazos');
-checkTasksDeadlines();
+// checkTasksDeadlines();
 
 const port = 3000;
 serve({

@@ -34,7 +34,6 @@ export const addTask = async (c) => {
   const body = await c.req.json();
   const { title, start_date, end_date, category, status } = body;
 
-  // Validação simples
   if (!title || !start_date || !end_date || !category || !status) {
     return c.json({ error: 'Todos os campos são obrigatórios' }, 400);
   }
