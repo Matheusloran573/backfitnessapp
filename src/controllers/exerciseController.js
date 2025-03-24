@@ -28,8 +28,32 @@ export const getExercises = async (c) => {
       .eq('user_id', user_id);
 
     if (error) throw new Error(error.message);
+
     return c.json(data);
   } catch (err) {
     return c.json({ error: err.message }, 500);
   }
 };
+
+export const putExercise = async (c) => {
+  try {
+    const id = c.req.param('id');
+    const { completed } = await c.req.json();
+    const user_id = c.get('user_id');
+
+    const { data, error } = await supabase
+      .from('exercises')
+      .update({ completed })
+      .eq('id', id)
+      .eq('user_id', user_id)
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    return c.json(data);
+  } catch (err) {
+    return c.json({ error: err.message }, 500);
+  }
+};
+

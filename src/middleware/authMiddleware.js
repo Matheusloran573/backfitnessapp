@@ -41,7 +41,8 @@ export const authenticate = async (c, next) => {
     }
 
     c.set('user', user);
-
+    c.set('user_id', user.user_id);
+    
     await next();
 
   } catch (error) {

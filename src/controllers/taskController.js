@@ -32,21 +32,32 @@ export const getTaskById = async (c) => {
 export const addTask = async (c) => {
   const userId = c.get('user_id');
   const body = await c.req.json();
-  const { id, title, start_date, end_date, category, status } = body;
+  const { title, start_date, end_date, category, status } = body;
 
-  if (!id || !title || !start_date || !end_date || !category || !status) {
+  // Validação simples
+  if (!title || !start_date || !end_date || !category || !status) {
     return c.json({ error: 'Todos os campos são obrigatórios' }, 400);
   }
 
   const { data, error } = await supabase
     .from('tasks')
-    .insert([{ id, title, start_date, end_date, category, status, user_id: userId }])
+    .insert([
+      {
+        title,
+        start_date,
+        end_date,
+        category,
+        status,
+        user_id: userId
+      }
+    ])
     .select()
     .single();
 
   if (error) return c.json({ error: error.message }, 500);
   return c.json(data, 201);
 };
+
 
 export const updateTask = async (c) => {
   const userId = c.get('user_id');
