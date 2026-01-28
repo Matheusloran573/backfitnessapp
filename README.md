@@ -27,3 +27,4 @@ Este é o backend para o aplicativo Fitness App, desenvolvido para ajudar os usu
 
 - **Acompanhamento de Progresso**:
   - Registro de progresso físico (peso, medidas, etc.).
+# back-fit-ness-app-hono-js
